@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>API Fullstack </h1>
+
+    <form id="registrationForm">
+        <label for="username">Login:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="cpf">CPF:</label>
+        <input type="cpf" id="cpf" name="cpf" required>
+
+
+        <button type="button" onclick="registerClient()">Cadastrar</button>
+    </form>
+
+    <script>
+        function registerClient() {
+            const registrationForm = document.getElementById("registrationForm");
+            const formData = new FormData(registrationForm);
+
+            fetch('http://seu-backend/api/clientes/cadastrar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    login: formData.get('username'),
+                    senha: formData.get('password'),
+                    email: formData.get('email'),
+                    cpf: formdata.get('cpf')
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Cadastro bem-sucedido:', data);
+                // Adicione aqui lógica adicional após o cadastro bem-sucedido, se necessário.
+            })
+            .catch(error => {
+                console.error('Erro durante o cadastro:', error);
+                // Adicione aqui lógica adicional para lidar com erros, se necessário.
+            });
+        }
+    </script>
+
+</body>
+</html>
